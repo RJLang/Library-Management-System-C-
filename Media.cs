@@ -3,7 +3,31 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Library_Management_System_C_
-{
+{ 
+    enum TypeOfMedia
+    {
+        Book_Phys,
+        Book_E,
+        CD
+    }
+
+    enum Categories
+    {
+        ActionAdventure,
+        Adventure,
+        Drama,
+        Fantasy,
+        Horror,
+        Music,
+        Mystery,
+        Mythology,
+        Romance,
+        Satire,
+        Sciencefiction,
+        Tragedy,
+        TragicComedy
+    }
+
     class Media
     {
         #region Properties
@@ -11,7 +35,7 @@ namespace Library_Management_System_C_
         /// <summary>
         /// Unique ID for media
         /// </summary>
-        public string ID { get; set; }
+        public uint ID { get; set; }
 
         /// <summary>
         /// Total copies of media owned
@@ -24,14 +48,20 @@ namespace Library_Management_System_C_
         public int AvailableCopies { get; set; }
 
         /// <summary>
+        /// Number of holds currently against the media
+        /// </summary>
+        public int HoldCount { get; set; }
+
+        /// <summary>
         /// Type of media (e.g. book, e-book, CD..._
         /// </summary>
-        public string Type { get; set; }
+        public TypeOfMedia Type { get; set; }
 
         /// <summary>
         /// Genres-Category of media
         /// </summary>
-        public string Category { get; set; }
+     
+        public Categories Category { get; set; }
 
         /// <summary>
         /// Author of media piece
@@ -42,8 +72,29 @@ namespace Library_Management_System_C_
         /// Creation/publish date
         /// </summary>
         public string OrginDate { get; set; }
-    
-        
+
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Take out media copy from available count
+        /// </summary>
+        /// <param name="availableCopies"></param>
+        public void Checkout(int availableCopies)
+        {
+            AvailableCopies -= 1;
+        }
+
+        /// <summary>
+        /// Add media copy back to availability count
+        /// </summary>
+        /// <param name="availableCopies"></param>
+        public void CheckIn(int availableCopies)
+        {
+            AvailableCopies += 1;
+        }
         #endregion
     }
 }

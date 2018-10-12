@@ -6,7 +6,7 @@ namespace Library_Management_System_C_
 {
     class Account
     {
-        private static int lastAccountNumber = 0;
+        private static int lastAccountNumber = 111110;
 
         #region Properties
 
@@ -38,7 +38,7 @@ namespace Library_Management_System_C_
         /// <summary>
         /// List of active loans for a user
         /// </summary>
-        public Array Loans { get; set; }
+        public List<Media> Loans { get; set; }
 
         /// <summary>
         /// User fees for lost damaged goods
@@ -60,6 +60,27 @@ namespace Library_Management_System_C_
 
         #endregion
 
+
+        #region Methods
+        /// <summary>
+        /// Check out media and add to personal loans
+        /// </summary>
+        /// <param name="id"></param>
+        public void CheckOut (uint id)
+        {
+            //Loans.Add(Convert.ToString(id));
+        }
+
+        /// <summary>
+        /// Check in media and remove from personal loans
+        /// </summary>
+        /// <param name="id"></param>
+        public void CheckIn (uint id, List<Media> loans)
+        {
+            //Loans.Remove(Convert.ToString(id));
+        }
+
+        #endregion
     }
 
 }

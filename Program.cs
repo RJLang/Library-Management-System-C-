@@ -6,7 +6,7 @@ namespace Library_Management_System_C_
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Currently Under Construction. Please check back in a few weeks.");
         }
     }
 }
