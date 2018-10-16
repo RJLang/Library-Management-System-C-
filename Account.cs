@@ -33,7 +33,7 @@ namespace Library_Management_System_C_
         /// <summary>
         /// List of pending holds for a user
         /// </summary>
-        public Array Holds { get; set; }
+        public List<Media> Holds { get; set; }
 
         /// <summary>
         /// List of active loans for a user
@@ -78,6 +78,11 @@ namespace Library_Management_System_C_
         public void CheckIn (uint id, List<Media> loans)
         {
             //Loans.Remove(Convert.ToString(id));
+        }
+
+        public void PlaceHold (uint ID)
+        {
+            //Holds.Add(Convert.ToString(id));
         }
 
         #endregion

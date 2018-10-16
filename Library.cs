@@ -11,6 +11,7 @@ namespace Library_Management_System_C_
         private static List<Account> accounts = new List<Account>();
         private static List<Media> ids = new List<Media>();
         private static List<Media> loans = new List<Media>();
+        private static List<Media> medias = new List<Media>();
 
         #region Methods
 
@@ -48,27 +49,34 @@ namespace Library_Management_System_C_
        /// <param name="accountNumber"></param>
        /// <param name="mediaID"></param>
        /// <param name="copies"></param>
-        public static void CheckOut(int accountNumber, uint mediaID, int copies)
+        public static void CheckOut(int accountNumber, uint mediaID, int copies /*,int holds*/)
         {
             var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
             if (account == null)
             {
-                //throw
+                //throw not found
                 return;
             }
             var id = ids.SingleOrDefault(a => a.ID == mediaID);
             if (id == null)
             {
-                //throw
+                //throw not found
                 return;
             }
 
             if (copies > 0 )
             {
-                account.CheckOut(mediaID);
-                id.Checkout(id.AvailableCopies);
-                 
+                /*if (holds > 0){*/
+                    account.CheckOut(mediaID);
+                    id.Checkout(/*id.AvailableCopies*/);
+                /*}*/
             }
+            else
+            {
+                //throw not enough copies
+            }
+
+
             return;
         }
 
@@ -84,13 +92,13 @@ namespace Library_Management_System_C_
             var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
             if (account == null)
             {
-                //throw
+                //throw not found
                 return;
             }
             var id = ids.SingleOrDefault(a => a.ID == mediaID);
             if (id == null)
             {
-                //throw
+                //throw not founf
                 return;
             }
 
@@ -103,19 +111,87 @@ namespace Library_Management_System_C_
             */
 
             account.CheckIn(mediaID, loans);
-            id.CheckIn(id.AvailableCopies);
+            id.CheckIn(/*id.AvailableCopies*/);
             return;
         }
 
-        //place hold
-        //return
-        //media details (author, date, copies, holds)
 
+
+        /// <summary>
+        /// Place a temporary hold on an item
+        /// </summary>
+        /// <param name="accountNumber"></param>
+        /// <param name="mediaID"></param>
+        /*public static void PlaceHold(int accountNumber, uint mediaID)
+        {
+            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            if (account == null)
+            {
+                //throw
+                return;
+            }
+            var id = ids.SingleOrDefault(a => a.ID == mediaID);
+            if (id == null)
+            {
+                //throw
+                return;
+            }
+
+            id.PlaceHold();
+
+            return;
+        }*/
+
+
+
+
+        //media details (author, date, copies, holds)
+        public static Media CheckMedia(uint mediaID)
+        {
+            var id = ids.SingleOrDefault(a => a.ID == mediaID);
+            if (id == null)
+            {
+                //throw not found
+                return null;
+            }
+            return id;
+        }
         //Check personal holds/loans
+        /*public static Media holdsInfo (int accountNumber)
+        {
+            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            if (account == null)
+            {
+                //throw not found
+                return null;
+            }
+            List<Media> holds = account.Holds;
+            return holds;
+        }*/
 
         //Inventory_Add
-        //Inventory_remove
+        public static Media addInv (uint id, int totalCopies, TypeOfMedia type, Categories category, string author, DateTime orginDate)
+        {
+            var newMedia = new Media
+            {
+                ID = id,
+                TotalCopies = totalCopies,
+                Type = type,
+                Category = category,
+                Author = author,
+                OrginDate = orginDate
+            };
 
+            medias.Add(newMedia);
+
+            return newMedia;
+        }
+        //Inventory_remove
+        /*
+        public static Media removeInv ()
+        {
+
+        }*/
         #endregion
 
     }

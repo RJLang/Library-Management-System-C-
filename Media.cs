@@ -50,7 +50,7 @@ namespace Library_Management_System_C_
         /// <summary>
         /// Number of holds currently against the media
         /// </summary>
-        public int HoldCount { get; set; }
+       // public int HoldCount { get; set; }
 
         /// <summary>
         /// Type of media (e.g. book, e-book, CD..._
@@ -71,7 +71,7 @@ namespace Library_Management_System_C_
         /// <summary>
         /// Creation/publish date
         /// </summary>
-        public string OrginDate { get; set; }
+        public DateTime OrginDate { get; set; }
 
 
         #endregion
@@ -82,7 +82,7 @@ namespace Library_Management_System_C_
         /// Take out media copy from available count
         /// </summary>
         /// <param name="availableCopies"></param>
-        public void Checkout(int availableCopies)
+        public void Checkout(/*int availableCopies*/)
         {
             AvailableCopies -= 1;
         }
@@ -91,10 +91,15 @@ namespace Library_Management_System_C_
         /// Add media copy back to availability count
         /// </summary>
         /// <param name="availableCopies"></param>
-        public void CheckIn(int availableCopies)
+        public void CheckIn(/*int availableCopies*/)
         {
             AvailableCopies += 1;
         }
+
+        //public void PlaceHold ()
+        //{
+        //   HoldCount += 1;
+        //}
         #endregion
     }
 }
