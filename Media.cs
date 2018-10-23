@@ -28,14 +28,23 @@ namespace Library_Management_System_C_
         TragicComedy
     }
 
+    
+
     class Media
     {
+        private static uint lastID = 0;
+
         #region Properties
 
         /// <summary>
         /// Unique ID for media
         /// </summary>
         public uint ID { get; set; }
+
+        /// <summary>
+        /// Title for media
+        /// </summary>
+        public string Title { get; set; }
 
         /// <summary>
         /// Total copies of media owned
@@ -100,6 +109,15 @@ namespace Library_Management_System_C_
         //{
         //   HoldCount += 1;
         //}
+        #endregion
+
+        #region Constructor
+
+        public Media()
+        {
+            ID = ++lastID;
+        }
+        
         #endregion
     }
 }

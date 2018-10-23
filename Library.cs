@@ -170,11 +170,12 @@ namespace Library_Management_System_C_
         }*/
 
         //Inventory_Add
-        public static Media addInv (uint id, int totalCopies, TypeOfMedia type, Categories category, string author, DateTime orginDate)
+        public static Media AddInv (/*uint id,*/ string title, int totalCopies, TypeOfMedia type, Categories category, string author, DateTime orginDate)
         {
             var newMedia = new Media
             {
-                ID = id,
+                //ID = id,
+                Title = title,
                 TotalCopies = totalCopies,
                 Type = type,
                 Category = category,
@@ -192,6 +193,12 @@ namespace Library_Management_System_C_
         {
 
         }*/
+
+        public static Account AccountLookup(int accountNumber)
+        {
+            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            return account;
+        }
         #endregion
 
     }
