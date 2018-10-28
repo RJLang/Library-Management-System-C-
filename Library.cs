@@ -7,11 +7,13 @@ namespace Library_Management_System_C_
 {
     class Library
     {
+        private static LibraryModel db = new LibraryModel();
 
-        private static List<Account> accounts = new List<Account>();
-        private static List<Media> ids = new List<Media>();
-        private static List<Media> loans = new List<Media>();
-        private static List<Media> medias = new List<Media>();
+        //Moved to DB
+        //private static List<Account> accounts = new List<Account>();
+        //private static List<Media> ids = new List<Media>();
+        //private static List<Media> loans = new List<Media>();
+        //private static List<Media> medias = new List<Media>();
 
         #region Methods
 
@@ -38,7 +40,8 @@ namespace Library_Management_System_C_
                 Name = name
             };
 
-            accounts.Add(account);
+            db.Accounts.Add(account);
+            db.SaveChanges();
 
             return account;
         }
@@ -51,26 +54,31 @@ namespace Library_Management_System_C_
        /// <param name="copies"></param>
         public static void CheckOut(int accountNumber, uint mediaID, int copies /*,int holds*/)
         {
-            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            //var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            var account = db.Accounts.Where(a => a.AccountNumber == accountNumber);
+
             if (account == null)
             {
                 //throw not found
                 return;
             }
-            var id = ids.SingleOrDefault(a => a.ID == mediaID);
+            //var id = ids.SingleOrDefault(a => a.ID == mediaID);
+            var id = db.Media.Where(a => a.ID == mediaID);
             if (id == null)
             {
                 //throw not found
                 return;
             }
 
-            if (copies > 0 )
-            {
+            //pending foreign key tables
+            //if (copies > 0 )
+            //{
                 /*if (holds > 0){*/
-                    account.CheckOut(mediaID);
-                    id.Checkout(/*id.AvailableCopies*/);
+            //        account.CheckOut(mediaID);
+            //        id.Checkout(/*id.AvailableCopies*/);
                 /*}*/
-            }
+            //}
+        
             else
             {
                 //throw not enough copies
@@ -89,13 +97,13 @@ namespace Library_Management_System_C_
         /// <param name="loans"></param>
         public static void CheckIn(int accountNumber, uint mediaID, int copies, List<Media> loans)
         {
-            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            var account = db.Accounts.Where(a => a.AccountNumber == accountNumber);
             if (account == null)
             {
                 //throw not found
                 return;
             }
-            var id = ids.SingleOrDefault(a => a.ID == mediaID);
+            var id = db.Media.Where(a => a.ID == mediaID);
             if (id == null)
             {
                 //throw not founf
@@ -110,8 +118,9 @@ namespace Library_Management_System_C_
             }
             */
 
-            account.CheckIn(mediaID, loans);
-            id.CheckIn(/*id.AvailableCopies*/);
+            //ForeignKey table
+           // account.CheckIn(mediaID, loans);
+           // id.CheckIn(/*id.AvailableCopies*/);
             return;
         }
 
@@ -146,9 +155,10 @@ namespace Library_Management_System_C_
 
 
         //media details (author, date, copies, holds)
-        public static Media CheckMedia(uint mediaID)
+        public static IEnumerable<Media> CheckMedia(uint mediaID)
         {
-            var id = ids.SingleOrDefault(a => a.ID == mediaID);
+            //var id = ids.SingleOrDefault(a => a.ID == mediaID);
+            var id = db.Media.Where(a => a.ID == mediaID);
             if (id == null)
             {
                 //throw not found
@@ -183,7 +193,8 @@ namespace Library_Management_System_C_
                 OrginDate = orginDate
             };
 
-            medias.Add(newMedia);
+            db.Media.Add(newMedia);
+            db.SaveChanges();
 
             return newMedia;
         }
@@ -194,10 +205,10 @@ namespace Library_Management_System_C_
 
         }*/
 
-        public static Account AccountLookup(int accountNumber)
+        public static IEnumerable<Account> AccountLookup(int accountNumber)
         {
-            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
-            return account;
+            //var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            return db.Accounts.Where(a => a.AccountNumber == accountNumber);
         }
         #endregion
 

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace Library_Management_System_C_
 {
     class Account
     {
-        private static int lastAccountNumber = 111110;
+        //private static int lastAccountNumber = 111110;
         //private static List<Media> loans = new List<Media>();
 
         #region Properties
@@ -16,11 +16,12 @@ namespace Library_Management_System_C_
         /// <summary>
         /// Unuique ID for user
         /// </summary>
-        public int AccountNumber { get; }    
+        public int AccountNumber { get; private set; }    
 
         /// <summary>
         /// Contact address for user and login
         /// </summary>
+        [EmailAddress]
         public string EmailAddress { get; set; }
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace Library_Management_System_C_
         /// <summary>
         /// Creation date of user's account
         /// </summary>
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; private set; }
 
         /// <summary>
         /// List of pending holds for a user
@@ -56,7 +57,7 @@ namespace Library_Management_System_C_
 
         public Account()
         {
-            AccountNumber = ++lastAccountNumber;
+            //AccountNumber = ++lastAccountNumber;
             CreatedDate = DateTime.Now;
         }
 

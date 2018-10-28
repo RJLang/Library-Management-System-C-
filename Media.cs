@@ -32,14 +32,14 @@ namespace Library_Management_System_C_
 
     class Media
     {
-        private static uint lastID = 0;
+        //private static uint lastID = 0;
 
         #region Properties
 
         /// <summary>
         /// Unique ID for media
         /// </summary>
-        public uint ID { get; set; }
+        public int ID { get; private set; }
 
         /// <summary>
         /// Title for media
@@ -113,10 +113,10 @@ namespace Library_Management_System_C_
 
         #region Constructor
 
-        public Media()
+       /* public Media()
         {
             ID = ++lastID;
-        }
+        }*/
         
         #endregion
     }

@@ -50,17 +50,23 @@ namespace Library_Management_System_C_
                         Console.Write("Please enter account number: ");
                         var accountNumber = Convert.ToInt32(Console.ReadLine());
 
-                        var acc = Library.AccountLookup(accountNumber);                       
-                        
-                        Console.WriteLine("********");
-                        Console.WriteLine($"Account Number: {acc.AccountNumber}");
-                        Console.WriteLine($"Account Name: {acc.Name}");
-                        Console.WriteLine($"Creation Date: {acc.CreatedDate}");
-                        Console.WriteLine($"E-Mail Address: {acc.EmailAddress}");
-                        Console.WriteLine($"Current Fees: ${acc.Fees}");
-                        Console.WriteLine($"Current Holds: {string.Join("`n", acc.Holds)}");
-                        Console.WriteLine($"Current Loans: {string.Join("`n", acc.Loans)}");
-                        Console.WriteLine("********");
+                        var accnt = Library.AccountLookup(accountNumber);
+
+                        foreach (var acc in accnt)
+                        {
+                            Console.WriteLine("********");
+                            Console.WriteLine($"Account Number: {acc.AccountNumber}");
+                            Console.WriteLine($"Account Name: {acc.Name}");
+                            Console.WriteLine($"Creation Date: {acc.CreatedDate}");
+                            Console.WriteLine($"E-Mail Address: {acc.EmailAddress}");
+                            Console.WriteLine($"Current Fees: ${acc.Fees}");
+                            Console.WriteLine($"Current Holds: {string.Join("`n", acc.Holds)}");
+                            Console.WriteLine($"Current Loans: {string.Join("`n", acc.Loans)}");
+                            Console.WriteLine("********");
+                        }
+
+
+
                         
                         break;
                     case "3":
