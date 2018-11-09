@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Library_Management_System_C_
 {
-    class Account
+    public class Account
     {
         //private static int lastAccountNumber = 111110;
         //private static List<Media> loans = new List<Media>();
@@ -37,12 +37,12 @@ namespace Library_Management_System_C_
         /// <summary>
         /// List of pending holds for a user
         /// </summary>
-        public List<Media> Holds { get; set; } = new List<Media>();
+        //public List<Media> Holds { get; set; } = new List<Media>();
 
         /// <summary>
         /// List of active loans for a user
         /// </summary>
-        public List<Media> Loans { get; set; } = new List<Media>();
+        //public List<Media> Loans { get; set; } = new List<Media>();
 
         /// <summary>
         /// User fees for lost damaged goods
@@ -70,30 +70,36 @@ namespace Library_Management_System_C_
         /// Check out media and add to personal loans
         /// </summary>
         /// <param name="id"></param>
-        public void CheckOut (uint id)
-        {
+        /* public void CheckOut (uint id)
+         {
+             var newLoan = new Loans
+             {
+                 TypeOfLoan = Loans.LoanType.Loan,
+                 AccountNumber = a
+             }
+             //var mediaLoan = Loans.SingleOrDefault(a => a.ID == id);
+             //Loans.Add(mediaLoan);
 
-            var mediaLoan = Loans.SingleOrDefault(a => a.ID == id);
-            Loans.Add(mediaLoan);
-
-            //Loans.Add(Convert.ToString(id));
-        }
+             //Loans.Add(Convert.ToString(id));
+         }*/
 
         /// <summary>
         /// Check in media and remove from personal loans
         /// </summary>
         /// <param name="id"></param>
+        /*
         public void CheckIn (uint id, List<Media> loans)
         {
             var mediaLoan = Loans.SingleOrDefault(a => a.ID == id);
             Loans.Remove(mediaLoan);
             //Loans.Remove(Convert.ToString(id));
         }
-
+   
         public void PlaceHold (uint ID)
         {
             //Holds.Add(Convert.ToString(id));
         }
+        */
 
         #endregion
     }

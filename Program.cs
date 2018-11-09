@@ -60,8 +60,8 @@ namespace Library_Management_System_C_
                             Console.WriteLine($"Creation Date: {acc.CreatedDate}");
                             Console.WriteLine($"E-Mail Address: {acc.EmailAddress}");
                             Console.WriteLine($"Current Fees: ${acc.Fees}");
-                            Console.WriteLine($"Current Holds: {string.Join("`n", acc.Holds)}");
-                            Console.WriteLine($"Current Loans: {string.Join("`n", acc.Loans)}");
+                            //Console.WriteLine($"Current Holds: {string.Join("`n", acc.Holds)}");
+                            //Console.WriteLine($"Current Loans: {string.Join("`n", acc.Loans)}");
                             Console.WriteLine("********");
                         }
 

@@ -5,12 +5,14 @@ using System.Text;
 
 namespace Library_Management_System_C_
 {
-    class LibraryModel : DbContext
+    public class LibraryModel : DbContext
     {
 
 
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Media> Media { get; set; }
+
+        public virtual DbSet<Loans> Loans { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -45,6 +47,18 @@ namespace Library_Management_System_C_
                 .ValueGeneratedOnAdd();
 
                 entity.ToTable("Media");
+
+            });
+
+            modelBuilder.Entity<Loans>(entity =>
+            {
+                entity.HasKey(e => e.TransactinID)
+                .HasName("PK_Loans");
+
+                entity.Property(e => e.TransactinID)
+                .ValueGeneratedOnAdd();
+
+                entity.ToTable("Loans");
 
             });
 

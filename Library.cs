@@ -69,15 +69,24 @@ namespace Library_Management_System_C_
                 //throw not found
                 return;
             }
+            if (copies > 0 )
+            {
+                //if (holds > 0){*/
+                var tranaction = new Loans
+                {
+                    TypeOfLoan = Loans.LoanType.Loan,
+                    AccountNumber = accountNumber,
+                    ID = mediaID
+                };
+                
+                db.Loans.Add(tranaction);
+                db.SaveChanges();
+                ////need to run Media.Loan or decrease amount of available copies
 
-            //pending foreign key tables
-            //if (copies > 0 )
-            //{
-                /*if (holds > 0){*/
-            //        account.CheckOut(mediaID);
-            //        id.Checkout(/*id.AvailableCopies*/);
-                /*}*/
-            //}
+                   //account.CheckOut(mediaID);
+                    //id.Checkout(/*id.AvailableCopies*/);
+                //}
+            }
         
             else
             {

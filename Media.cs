@@ -4,14 +4,14 @@ using System.Text;
 
 namespace Library_Management_System_C_
 { 
-    enum TypeOfMedia
+    public enum TypeOfMedia
     {
         Book_Phys,
         Book_E,
         CD
     }
 
-    enum Categories
+    public enum Categories
     {
         ActionAdventure,
         Adventure,
@@ -28,9 +28,9 @@ namespace Library_Management_System_C_
         TragicComedy
     }
 
-    
 
-    class Media
+
+    public class Media
     {
         //private static uint lastID = 0;
 
@@ -69,7 +69,7 @@ namespace Library_Management_System_C_
         /// <summary>
         /// Genres-Category of media
         /// </summary>
-     
+
         public Categories Category { get; set; }
 
         /// <summary>
@@ -113,11 +113,33 @@ namespace Library_Management_System_C_
 
         #region Constructor
 
-       /* public Media()
+        /* public Media()
+         {
+             ID = ++lastID;
+         }*/
+
+        #endregion
+
+        #region Methods
+
+        public  void Loan(int copies)
         {
-            ID = ++lastID;
-        }*/
-        
+            if (AvailableCopies < 1)
+            {
+                //throw
+            }
+            AvailableCopies -= 1;
+        }
+
+        public void Return (int copies)
+        {
+            if (TotalCopies >= AvailableCopies)
+            {
+                //throw
+            } 
+            AvailableCopies += 1;
+        }
+
         #endregion
     }
 }

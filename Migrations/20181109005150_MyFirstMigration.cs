@@ -25,6 +25,22 @@ namespace Library_Management_System_C_.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Loans",
+                columns: table => new
+                {
+                    AccountNumber = table.Column<int>(nullable: false),
+                    ID = table.Column<long>(nullable: false),
+                    TypeOfLoan = table.Column<int>(nullable: false),
+                    TransactionDate = table.Column<DateTime>(nullable: false),
+                    TransactinID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Loans", x => x.TransactinID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Media",
                 columns: table => new
                 {
@@ -36,45 +52,24 @@ namespace Library_Management_System_C_.Migrations
                     Type = table.Column<int>(nullable: false),
                     Category = table.Column<int>(nullable: false),
                     Author = table.Column<string>(nullable: true),
-                    OrginDate = table.Column<DateTime>(nullable: false),
-                    AccountNumber = table.Column<int>(nullable: true),
-                    AccountNumber1 = table.Column<int>(nullable: true)
+                    OrginDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Media", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Media_Accounts_AccountNumber",
-                        column: x => x.AccountNumber,
-                        principalTable: "Accounts",
-                        principalColumn: "AccountNumber",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Media_Accounts_AccountNumber1",
-                        column: x => x.AccountNumber1,
-                        principalTable: "Accounts",
-                        principalColumn: "AccountNumber",
-                        onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Media_AccountNumber",
-                table: "Media",
-                column: "AccountNumber");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Media_AccountNumber1",
-                table: "Media",
-                column: "AccountNumber1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Media");
+                name: "Accounts");
 
             migrationBuilder.DropTable(
-                name: "Accounts");
+                name: "Loans");
+
+            migrationBuilder.DropTable(
+                name: "Media");
         }
     }
 }

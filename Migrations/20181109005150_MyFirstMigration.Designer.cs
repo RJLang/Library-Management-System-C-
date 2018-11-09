@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library_Management_System_C_.Migrations
 {
     [DbContext(typeof(LibraryModel))]
-    [Migration("20181028215437_MyFirstMigration")]
+    [Migration("20181109005150_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,15 +42,31 @@ namespace Library_Management_System_C_.Migrations
                     b.ToTable("Accounts");
                 });
 
+            modelBuilder.Entity("Library_Management_System_C_.Loans", b =>
+                {
+                    b.Property<int>("TransactinID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AccountNumber");
+
+                    b.Property<long>("ID");
+
+                    b.Property<DateTime>("TransactionDate");
+
+                    b.Property<int>("TypeOfLoan");
+
+                    b.HasKey("TransactinID")
+                        .HasName("PK_Loans");
+
+                    b.ToTable("Loans");
+                });
+
             modelBuilder.Entity("Library_Management_System_C_.Media", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AccountNumber");
-
-                    b.Property<int?>("AccountNumber1");
 
                     b.Property<string>("Author");
 
@@ -69,22 +85,7 @@ namespace Library_Management_System_C_.Migrations
                     b.HasKey("ID")
                         .HasName("PK_Media");
 
-                    b.HasIndex("AccountNumber");
-
-                    b.HasIndex("AccountNumber1");
-
                     b.ToTable("Media");
-                });
-
-            modelBuilder.Entity("Library_Management_System_C_.Media", b =>
-                {
-                    b.HasOne("Library_Management_System_C_.Account")
-                        .WithMany("Holds")
-                        .HasForeignKey("AccountNumber");
-
-                    b.HasOne("Library_Management_System_C_.Account")
-                        .WithMany("Loans")
-                        .HasForeignKey("AccountNumber1");
                 });
 #pragma warning restore 612, 618
         }
