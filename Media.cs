@@ -122,7 +122,7 @@ namespace Library_Management_System_C_
 
         #region Methods
 
-        public  void Loan(int copies)
+        public  void Loan()
         {
             if (AvailableCopies < 1)
             {
@@ -131,7 +131,7 @@ namespace Library_Management_System_C_
             AvailableCopies -= 1;
         }
 
-        public void Return (int copies)
+        public void Return ()
         {
             if (TotalCopies >= AvailableCopies)
             {

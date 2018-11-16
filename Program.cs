@@ -15,6 +15,9 @@ namespace Library_Management_System_C_
 
             Console.WriteLine("******************");
 
+            Console.Write("Email Address: ");
+            var emailAddress = Console.ReadLine();
+
             while (true)
             {
                 Console.WriteLine("0. Exit");
@@ -36,11 +39,11 @@ namespace Library_Management_System_C_
                         return;
                     case "1":
                         Console.Write("Email Address: ");
-                        var emailAddress = Console.ReadLine();
+                        var newEmailAddress = Console.ReadLine();
                         Console.Write("Name:");
                         var name = Console.ReadLine();
 
-                        var account = Library.CreateAccount(emailAddress, name);
+                        var account = Library.CreateAccount(newEmailAddress, name);
 
                         Console.WriteLine($"Account successfully created.");
                         Console.WriteLine($"Your account number is: {account.AccountNumber}");
@@ -50,7 +53,7 @@ namespace Library_Management_System_C_
                         Console.Write("Please enter account number: ");
                         var accountNumber = Convert.ToInt32(Console.ReadLine());
 
-                        var accnt = Library.AccountLookup(accountNumber);
+                        var accnt = Library.AccountLookup(emailAddress);
 
                         foreach (var acc in accnt)
                         {

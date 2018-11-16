@@ -4,14 +4,16 @@ using Library_Management_System_C_;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Library_Management_System_C_.Migrations
 {
     [DbContext(typeof(LibraryModel))]
-    partial class LibraryModelModelSnapshot : ModelSnapshot
+    [Migration("20181116011927_AddingLoans")]
+    partial class AddingLoans
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -14,29 +14,21 @@ namespace LibraryUI.Controllers
     public class AccountsController : Controller
     {
 
-        private readonly LibraryModel _context;
-
-        public AccountsController(LibraryModel context)
-        {
-            _context = context;
-        }
-
         // GET: Accounts
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Accounts.ToListAsync());
+            return View(Library.AccountLookup(HttpContext.User.Identity.Name));
         }
 
         // GET: Accounts/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var account = await _context.Accounts
-                .FirstOrDefaultAsync(m => m.AccountNumber == id);
+            var account = Library.GetAccountDetails(id.Value);
             if (account == null)
             {
                 return NotFound();
@@ -56,26 +48,25 @@ namespace LibraryUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AccountNumber,EmailAddress,Name,CreatedDate,Fees")] Account account)
+        public IActionResult Create([Bind("AccountNumber,EmailAddress,Name,CreatedDate,Fees")] Account account)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(account);
-                await _context.SaveChangesAsync();
+                Library.CreateAccount(account.EmailAddress, account.Name);
                 return RedirectToAction(nameof(Index));
             }
             return View(account);
         }
 
         // GET: Accounts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var account = await _context.Accounts.FindAsync(id);
+            var account = Library.GetAccountDetails(id.Value);
             if (account == null)
             {
                 return NotFound();
@@ -88,7 +79,7 @@ namespace LibraryUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AccountNumber,EmailAddress,Name,CreatedDate,Fees")] Account account)
+        public IActionResult Edit(int id, [Bind("AccountNumber,EmailAddress,Name,CreatedDate,Fees")] Account account)
         {
             if (id != account.AccountNumber)
             {
@@ -99,12 +90,11 @@ namespace LibraryUI.Controllers
             {
                 try
                 {
-                    _context.Update(account);
-                    await _context.SaveChangesAsync();
+                    Library.EditAccount(account);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AccountExists(account.AccountNumber))
+                    if (!Library.AccountExists(account.AccountNumber))
                     {
                         return NotFound();
                     }
@@ -118,38 +108,7 @@ namespace LibraryUI.Controllers
             return View(account);
         }
 
-        // GET: Accounts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var account = await _context.Accounts
-                .FirstOrDefaultAsync(m => m.AccountNumber == id);
-            if (account == null)
-            {
-                return NotFound();
-            }
-
-            return View(account);
-        }
-
-        // POST: Accounts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var account = await _context.Accounts.FindAsync(id);
-            _context.Accounts.Remove(account);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool AccountExists(int id)
-        {
-            return _context.Accounts.Any(e => e.AccountNumber == id);
-        }
+       
     }
 }

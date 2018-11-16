@@ -1,0 +1,48 @@
+﻿@model Library_Management_System_C_.Loans
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Loans</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AccountNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfLoan)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfLoan)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TransactionDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.TransactinID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

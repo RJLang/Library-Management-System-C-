@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Library_Management_System_C_
 {
-    class Library
+    public static class Library
     {
         private static LibraryModel db = new LibraryModel();
 
@@ -46,12 +46,12 @@ namespace Library_Management_System_C_
             return account;
         }
 
-       /// <summary>
-       /// Check out book and add to account's loan list
-       /// </summary>
-       /// <param name="accountNumber"></param>
-       /// <param name="mediaID"></param>
-       /// <param name="copies"></param>
+        /// <summary>
+        /// Check out book and add to account's loan list
+        /// </summary>
+        /// <param name="accountNumber"></param>
+        /// <param name="mediaID"></param>
+        /// <param name="copies"></param>
         public static void CheckOut(int accountNumber, uint mediaID, int copies /*,int holds*/)
         {
             //var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
@@ -62,14 +62,16 @@ namespace Library_Management_System_C_
                 //throw not found
                 return;
             }
-            //var id = ids.SingleOrDefault(a => a.ID == mediaID);
-            var id = db.Media.Where(a => a.ID == mediaID);
-            if (id == null)
+
+            var media = db.Media.FirstOrDefault(a => a.ID == mediaID);
+            if (media == null)
             {
                 //throw not found
                 return;
             }
-            if (copies > 0 )
+
+            //Validate media's available to be checked out
+            if (copies > 0)
             {
                 //if (holds > 0){*/
                 var tranaction = new Loans
@@ -78,16 +80,21 @@ namespace Library_Management_System_C_
                     AccountNumber = accountNumber,
                     ID = mediaID
                 };
-                
+                //Record loan
                 db.Loans.Add(tranaction);
-                db.SaveChanges();
-                ////need to run Media.Loan or decrease amount of available copies
 
-                   //account.CheckOut(mediaID);
-                    //id.Checkout(/*id.AvailableCopies*/);
+                //Remove media from active inventory
+                media.Loan();
+                db.Update(media);
+
+
+                db.SaveChanges();
+
+                //account.CheckOut(mediaID);
+                //id.Checkout(/*id.AvailableCopies*/);
                 //}
             }
-        
+
             else
             {
                 //throw not enough copies
@@ -128,8 +135,8 @@ namespace Library_Management_System_C_
             */
 
             //ForeignKey table
-           // account.CheckIn(mediaID, loans);
-           // id.CheckIn(/*id.AvailableCopies*/);
+            // account.CheckIn(mediaID, loans);
+            // id.CheckIn(/*id.AvailableCopies*/);
             return;
         }
 
@@ -189,7 +196,7 @@ namespace Library_Management_System_C_
         }*/
 
         //Inventory_Add
-        public static Media AddInv (/*uint id,*/ string title, int totalCopies, TypeOfMedia type, Categories category, string author, DateTime orginDate)
+        public static Media AddInv(/*uint id,*/ string title, int totalCopies, TypeOfMedia type, Categories category, string author, DateTime orginDate)
         {
             var newMedia = new Media
             {
@@ -214,10 +221,70 @@ namespace Library_Management_System_C_
 
         }*/
 
-        public static IEnumerable<Account> AccountLookup(int accountNumber)
+        public static IEnumerable<Account> AccountLookup(string emailAddress)
         {
             //var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
-            return db.Accounts.Where(a => a.AccountNumber == accountNumber);
+            return db.Accounts.Where(a => a.EmailAddress == emailAddress);
+        }
+
+        public static Account GetAccountDetails(int accountNumber)
+        {
+            return db.Accounts.FirstOrDefault(a => a.AccountNumber == accountNumber);
+        }
+
+        public static Media GetMediaDetails(uint mediaID)
+        {
+            return db.Media.FirstOrDefault(a => a.ID == mediaID);
+        }
+
+        public static IEnumerable<Loans> GetAllLoan(int accountNumber)
+        {
+            return db.Loans.Where(a => a.AccountNumber == accountNumber);
+        }
+
+        public static IEnumerable<Loans> GetAllLoansbyUser(string emailAddress)
+        {
+            var account = db.Accounts.FirstOrDefault(a => a.EmailAddress == emailAddress);
+            return db.Loans.Where(a => a.AccountNumber == account.AccountNumber);
+
+        }
+
+        public static Loans GetLoanDetails(int transactionID)
+        {
+            return db.Loans.FirstOrDefault(a => a.TransactinID == transactionID);
+        }
+
+        /// <summary>
+        /// Method to return media back to inventory and remove record of loan
+        /// </summary>
+        /// <param name="loan"></param>
+        public static void Return (Loans loan)
+        {
+
+            var oldMedia = Library.GetMediaDetails(loan.ID);
+            oldMedia.Return();
+            db.Update(oldMedia);
+
+            var oldLoan = Library.GetLoanDetails(loan.AccountNumber);
+            oldLoan.returns();
+            db.Update(oldLoan);           
+            
+
+            db.SaveChanges();
+        }
+
+        public static void EditAccount (Account account)
+        {
+            var oldAccount = Library.GetAccountDetails(account.AccountNumber);
+            oldAccount.Name = account.Name;
+            oldAccount.EmailAddress = account.EmailAddress;
+            db.Update(oldAccount);
+            db.SaveChanges();
+        }
+
+        public static bool AccountExists(int id)
+        {
+            return db.Accounts.Any(a => a.AccountNumber == id);
         }
         #endregion
 

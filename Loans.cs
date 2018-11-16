@@ -24,9 +24,21 @@ namespace Library_Management_System_C_
         public DateTime TransactionDate { get; set; }
         public int TransactinID { get; set; }
 
+        public bool Active { get; set; }
+
         public Loans()
         {
             TransactionDate = DateTime.Now;
+        }
+
+        public void returns()
+        {
+            Active = false;
+        }
+
+        public void loans()
+        {
+            Active = true;
         }
 
         #endregion
