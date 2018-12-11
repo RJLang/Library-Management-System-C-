@@ -135,18 +135,39 @@ namespace LibraryUI.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //public IActionResult CheckOut(uint? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var media = Library.GetMediaDetails(id.Value);
-        //    var account = Library.AccountLookupName(HttpContext.User.Identity.Name);
-        //    int accountID = account.Where(a => account.I)
-        //    Library.CheckOut(account, media, 1);
+        public IActionResult CheckOut(uint? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            //var media = Library.GetMediaDetails(id.Value);
+            var account = Library.AccountLookupName(HttpContext.User.Identity.Name);
+           
+            //int accountID = account.Where(a => account.)
+            //Library.CheckOut(account, id.Value, 1);
 
-        //    return RedirectToAction(nameof(Index));
-        //}
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Admin()
+        {
+            return View(Library.GetAllMedia());
+        }
+        public IActionResult AdminDetails(uint? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var media = Library.GetMediaDetails(id.Value);
+            if (media == null)
+            {
+                return NotFound();
+            }
+
+            return View(media);
+        }
     }
 }

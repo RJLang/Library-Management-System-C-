@@ -15,19 +15,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Admin\Create.cshtml">
+    <Content Update="Views\Media\Create.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Admin\Delete.cshtml">
+    <Content Update="Views\Media\Delete.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Admin\Details.cshtml">
+    <Content Update="Views\Media\AdminDetails.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Admin\Edit.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Views\Admin\Index.cshtml">
+    <Content Update="Views\Media\Edit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>
