@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Library_Management_System_C_;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryUI.Controllers
 {
+    [Authorize]
     public class LoansController : Controller
     {
         // GET: Loans

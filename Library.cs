@@ -215,16 +215,23 @@ namespace Library_Management_System_C_
             return newMedia;
         }
         //Inventory_remove
-        /*
-        public static Media removeInv ()
+   
+        public static void RemoveInv (uint id)
         {
-
-        }*/
+            var media = Library.GetMediaDetails(id);
+            db.Media.Remove(media);
+            db.SaveChanges();
+        }
 
         public static IEnumerable<Account> AccountLookup(string emailAddress)
         {
             //var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
             return db.Accounts.Where(a => a.EmailAddress == emailAddress);
+        }
+        public static IEnumerable<Account> AccountLookupName(string name)
+        {
+            //var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            return db.Accounts.Where(a => a.Name == name);
         }
 
         public static Account GetAccountDetails(int accountNumber)
@@ -235,6 +242,11 @@ namespace Library_Management_System_C_
         public static Media GetMediaDetails(uint mediaID)
         {
             return db.Media.FirstOrDefault(a => a.ID == mediaID);
+        }
+
+        public static IEnumerable<Media> GetAllMedia()
+        {
+            return db.Set<Media>();
         }
 
         public static IEnumerable<Loans> GetAllLoan(int accountNumber)
@@ -282,11 +294,30 @@ namespace Library_Management_System_C_
             db.SaveChanges();
         }
 
+        public static void EditMedia( Media media)
+        {
+            var oldMedia = Library.GetMediaDetails((uint)media.ID);
+            oldMedia.TotalCopies = media.TotalCopies;
+            oldMedia.Title = media.Title;
+            oldMedia.OrginDate = media.OrginDate;
+            oldMedia.Author = media.Author;
+            oldMedia.AvailableCopies = media.AvailableCopies;
+            oldMedia.Category = media.Category;
+            oldMedia.Type = media.Type;
+            db.Update(oldMedia);
+            db.SaveChanges();
+        }
+
         public static bool AccountExists(int id)
         {
             return db.Accounts.Any(a => a.AccountNumber == id);
         }
         #endregion
+
+        public static bool MediaExists(uint id)
+        {
+            return db.Media.Any(e => e.ID == id);
+        }
 
     }
 }
