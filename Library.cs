@@ -52,7 +52,7 @@ namespace Library_Management_System_C_
         /// <param name="accountNumber"></param>
         /// <param name="mediaID"></param>
         /// <param name="copies"></param>
-        public static void CheckOut(int accountNumber, uint mediaID, int copies /*,int holds*/)
+        public static void CheckOut(int accountNumber, uint mediaID/*, int copies,int holds*/)
         {
             //var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
             var account = db.Accounts.Where(a => a.AccountNumber == accountNumber);
@@ -71,7 +71,7 @@ namespace Library_Management_System_C_
             }
 
             //Validate media's available to be checked out
-            if (copies > 0)
+            if (media.AvailableCopies > 0)
             {
                 //if (holds > 0){*/
                 var tranaction = new Loans
@@ -228,10 +228,27 @@ namespace Library_Management_System_C_
             //var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
             return db.Accounts.Where(a => a.EmailAddress == emailAddress);
         }
-        public static IEnumerable<Account> AccountLookupName(string name)
+        public static Account AccountLookupName(string name)
         {
             //var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
-            return db.Accounts.Where(a => a.Name == name);
+            return db.Accounts.SingleOrDefault(a => a.Name == name);
+        }
+
+
+        //#################8888888888888888888888888888888888888          -TESTING
+        public static int AccountConversionLookup(string emailAddress)
+        {
+            var netuser = db.AspNetUsers.SingleOrDefault(a => a.EmailAddress == emailAddress);
+            try
+            {
+                var user = db.Accounts.SingleOrDefault(a => a.EmailAddress == netuser.EmailAddress);
+                return user.AccountNumber;
+            }
+            catch
+            {
+                throw new ArgumentNullException ("User not found in local DB" );
+            }
+            
         }
 
         public static Account GetAccountDetails(int accountNumber)
@@ -312,12 +329,14 @@ namespace Library_Management_System_C_
         {
             return db.Accounts.Any(a => a.AccountNumber == id);
         }
-        #endregion
+
 
         public static bool MediaExists(uint id)
         {
             return db.Media.Any(e => e.ID == id);
         }
-
+        
+        
+        #endregion
     }
 }

@@ -5,14 +5,16 @@ using System.Text;
 
 namespace Library_Management_System_C_
 {
+
+
     public class LibraryModel : DbContext
     {
-
-
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Media> Media { get; set; }
 
         public virtual DbSet<Loans> Loans { get; set; }
+
+        public virtual DbSet<Account> AspNetUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

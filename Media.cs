@@ -39,7 +39,7 @@ namespace Library_Management_System_C_
         /// <summary>
         /// Unique ID for media
         /// </summary>
-        public int ID { get; private set; }
+        public int ID { get; set; }
 
         /// <summary>
         /// Title for media

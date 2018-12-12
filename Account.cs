@@ -16,7 +16,7 @@ namespace Library_Management_System_C_
         /// <summary>
         /// Unuique ID for user
         /// </summary>
-        public int AccountNumber { get; private set; }    
+        public int AccountNumber { get;  set; }    
 
         /// <summary>
         /// Contact address for user and login
@@ -32,7 +32,7 @@ namespace Library_Management_System_C_
         /// <summary>
         /// Creation date of user's account
         /// </summary>
-        public DateTime CreatedDate { get; private set; }
+        public DateTime CreatedDate { get; set; }
 
         /// <summary>
         /// List of pending holds for a user

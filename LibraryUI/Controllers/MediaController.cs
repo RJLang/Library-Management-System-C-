@@ -104,7 +104,7 @@ namespace LibraryUI.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Admin));
             }
             return View(media);
         }
@@ -132,7 +132,7 @@ namespace LibraryUI.Controllers
         public IActionResult DeleteConfirmed(uint id)
         {
             Library.RemoveInv(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Admin));
         }
 
         public IActionResult CheckOut(uint? id)
@@ -142,10 +142,9 @@ namespace LibraryUI.Controllers
                 return NotFound();
             }
             //var media = Library.GetMediaDetails(id.Value);
-            var account = Library.AccountLookupName(HttpContext.User.Identity.Name);
+            var accountID = Library.AccountConversionLookup(HttpContext.User.Identity.Name);
            
-            //int accountID = account.Where(a => account.)
-            //Library.CheckOut(account, id.Value, 1);
+            Library.CheckOut(accountID, id.Value);
 
             return RedirectToAction(nameof(Index));
         }
