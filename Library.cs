@@ -111,7 +111,7 @@ namespace Library_Management_System_C_
         /// <param name="mediaID"></param>
         /// <param name="copies"></param>
         /// <param name="loans"></param>
-        public static void CheckIn(int accountNumber, uint mediaID, int copies, List<Media> loans)
+        public static void CheckIn(int accountNumber, uint mediaID /*int copies, List<Media> loans*/)
         {
             var account = db.Accounts.Where(a => a.AccountNumber == accountNumber);
             if (account == null)
@@ -119,8 +119,8 @@ namespace Library_Management_System_C_
                 //throw not found
                 return;
             }
-            var id = db.Media.Where(a => a.ID == mediaID);
-            if (id == null)
+            var media = db.Media.FirstOrDefault(a => a.ID == mediaID);
+            if (media == null)
             {
                 //throw not founf
                 return;
@@ -137,7 +137,26 @@ namespace Library_Management_System_C_
             //ForeignKey table
             // account.CheckIn(mediaID, loans);
             // id.CheckIn(/*id.AvailableCopies*/);
-            return;
+
+
+            //Validate media's available to be checked in
+            if (media.AvailableCopies < media.TotalCopies)
+            {
+                //if (holds > 0){*/
+                var transaction = db.Loans.FirstOrDefault(a => a.ID == mediaID);
+
+                //Record loan
+                db.Loans.Remove(transaction);
+
+                //Remove media from active inventory
+                media.Return();
+                db.Update(media);
+
+
+                db.SaveChanges();
+
+                return;
+            }
         }
 
 

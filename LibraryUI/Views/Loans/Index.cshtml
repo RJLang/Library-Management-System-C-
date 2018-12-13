@@ -1,54 +1,117 @@
-﻿@model IEnumerable<Library_Management_System_C_.Loans>
+﻿@*@model IEnumerable<Library_Management_System_C_.Loans>*@
+@*@model dynamic*@
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>My Loans</h2>
+@{
+    IEnumerable<Media> media = ViewData["Media"] as IEnumerable<Media>;
+    IEnumerable<Loans> loans = ViewData["Loans"] as IEnumerable<Loans>;
+}
 
+<h2>My Loans</h2>
+@*
+    <table class="table">
+            <thead>
+                    <tr>
+
+
+                        <th>
+                                @Html.DisplayNameFor(model => model.AccountNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ID)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TypeOfLoan)
+                            </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Media.ID)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TransactionDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Active)
+                                </th>
+                                <th></th>
+                    </tr>
+                </thead>
+            <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                    @Html.DisplayFor(modelItem => item.AccountNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TypeOfLoan)
+                                </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Media.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Active)
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Loans.TransactinID">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+
+        </table>*@
+
+@*Loop through the loans and display the desired data*@
 <table class="table">
     <thead>
+        @*<table>*@
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.AccountNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TypeOfLoan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TransactionDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Active)
-            </th>
-            <th></th>
+            <th>Title</th>
+            <th>Active</th>
+            <th>Author</th>
+            <th>TransactionDate</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AccountNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeOfLoan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TransactionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.TransactinID">Details</a> 
-            </td>
-        </tr>
-}
+        @foreach (Loans sample in loans)
+        {
+            var item = media.SingleOrDefault(a => a.ID == sample.ID);
+            <tr>
+                <td>@item.Title</td>
+                <td>@sample.Active</td>
+                <td>@item.Author</td>
+                <td>@sample.TransactionDate</td>
+                <td>
+                    <a asp-action="CheckIn" asp-route-id="@item.ID">CheckIn</a>
+                </td>
+
+
+
+            </tr>
+
+            @*@foreach (Media item in media)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.ID</td>
+                        <td>@item.Type</td>
+                        <td>@sample.TransactionDate</td>
+                    </tr>
+                }*@
+        }
     </tbody>
+
+
 </table>
+
