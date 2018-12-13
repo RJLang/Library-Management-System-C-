@@ -75,8 +75,12 @@ namespace Library_Management_System_C_
                     case "3":
                         Console.WriteLine("Title of new material: ");
                         var title = Console.ReadLine();
+
                         Console.WriteLine("Number of copies to add: ");
                         var totalCopies = Convert.ToInt32(Console.ReadLine());
+
+                        Console.WriteLine("Number of copies to be available: ");
+                        var availableCopies = Convert.ToInt32(Console.ReadLine());
 
                         Console.Write("Account Types: ");
                         var types = Enum.GetNames(typeof(TypeOfMedia));
@@ -105,7 +109,7 @@ namespace Library_Management_System_C_
                         var orginDate = Convert.ToDateTime(Console.ReadLine());
 
 
-                        var newMedia = Library.AddInv(title, totalCopies, type, category, author, orginDate);
+                        var newMedia = Library.AddInv(title, totalCopies, availableCopies,type, category, author, orginDate);
 
                         Console.WriteLine("********");
                         Console.WriteLine($"Author: {newMedia.Author}");

@@ -215,13 +215,23 @@ namespace Library_Management_System_C_
         }*/
 
         //Inventory_Add
-        public static Media AddInv(/*uint id,*/ string title, int totalCopies, TypeOfMedia type, Categories category, string author, DateTime orginDate)
+        public static Media AddInv(/*uint id,*/ string title, int totalCopies, int availableCopies, TypeOfMedia type, Categories category, string author, DateTime orginDate)
         {
+            if (totalCopies < availableCopies)
+            {
+                return null;
+            }
+            if (totalCopies < 0)
+            {
+                return null;
+            }
+
             var newMedia = new Media
             {
                 //ID = id,
                 Title = title,
                 TotalCopies = totalCopies,
+                AvailableCopies = availableCopies,
                 Type = type,
                 Category = category,
                 Author = author,

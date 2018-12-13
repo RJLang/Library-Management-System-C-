@@ -53,7 +53,7 @@ namespace LibraryUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Library.AddInv(media.Title, media.TotalCopies, media.Type, media.Category, media.Author, media.OrginDate);
+                Library.AddInv(media.Title, media.TotalCopies,media.AvailableCopies, media.Type, media.Category, media.Author, media.OrginDate);
                 return RedirectToAction(nameof(Index));
             }
             return View(media);
